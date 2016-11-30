@@ -1,0 +1,3 @@
+(1) Schreibe einen Addierer, der nur mit "+1" auf seine Ergebnise kommt.
+(2) Erweitere den Addierer so, dass das Ergebnis einer Rechnung als erste Zahl für eine weitere Rechnung genommen wird.
+(3) Schreibe einen Multiplizierer, der nur mit "+1" auf seine Ergebnise kommt.

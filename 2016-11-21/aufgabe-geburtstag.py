@@ -15,6 +15,6 @@ else:                                           # nach dem 21. November bleibt Ã
     print("Sie hatten dieses Jahr noch nicht Geburtstag.")
 
 if month < 11 or (month == 11 and day <= 21):   # vor November oder vor oder am 21. November
-    print("Sie sind", 2016 - year, "alt.")
+    print("Sie sind", 2016 - year, "Jahre alt.")
 else:                                           # nach dem 21. November
-    print("Sie sind", 2015 - year, "alt.")
+    print("Sie sind", 2015 - year, "Jahre alt.")
