@@ -28,6 +28,9 @@ a[len(a):] = [11, 12, 13]
 
 print(a)
 
+# Objekte ändern
+b[1] = "Was auch immer"
+
 # Objekte einfügen
 a.insert(7, 7)  # an der 7. Stelle die Zahl 7 einfügen
 

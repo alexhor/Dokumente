@@ -1,0 +1,14 @@
+(1)	Du erinnerst dich an das Geburtstagsprogramm? Kopiere dieses und verändere es so, dass der Monat nicht mehr als Zahl, sondern als Name (Januar, usw.) eingegeben wird.
+	
+	Tipp: Erstelle eine Liste mit allen Monatsnamen und verwende die Funktion Liste.index(object)
+
+
+
+(2)	Schreibe ein Programm, dass nach einer ganzen Zahl fragt und anschließend die Vielfache dieser Zahl (bis 10 mal) ausgibt:
+	
+	1 * zahl =
+	2 * zahl =
+	3 * zahl =
+	usw....
+	
+	Verwende hierfür eine for-Schleife!
