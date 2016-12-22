@@ -1,0 +1,19 @@
+Hangman
+=======
+
+  * Am Anfang gibt man ein Wort ein
+  * das Wort verschwindet, wenn es vom Benutzer bestätigt wurde
+  * dann werden so viele "_" angezeigt, wie das eingegebene Wort Buchstaben hat
+  * Wir ein neuer Buchstabe eingegeben, dann werden alle "_" durch den eingegebenen
+    Buchstaben ersetzt, an deren Stelle das Wort diesen Buchstaben hatte
+  * Wenn der Buchstabe nicht in dem Wort vorkommt, dann wir der Benutzer darüber informiert
+  * Jede Eingabe des Benutzers wird auf Richtigkeit überprüft (ist es genau ein Buchstabe)
+  * Groß- und Kleinschreibung wird nicht beachtet (alle Eingaben werden in Kleinbuchstabeln konvertiert)
+  * Wenn das Wort vollständig erraten ist, wird eine Erfolgsmeldung angezeigt
+
+ZUSÄTZLICH
+  * Alle bereits verwendeten falschen Buchstaben werden angezeigt
+  * nach x falschen Buchstaben endet das Spiel
+  * für jeden falschen Buchstaben wird ein Stück des Hangman auf dem Bildschirm angezeigt
+    => Als Inspiration zum Hangman Zeichnen, schaut euch mal das zweite Bild auf dieser Seite an: http://ascii.co.uk/art/hangman
+  * was immer euch sonst noch für lustige Sachen einfallen
