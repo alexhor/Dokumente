@@ -8,8 +8,9 @@ Hangman
     Buchstaben ersetzt, an deren Stelle das Wort diesen Buchstaben hatte
   * Wenn der Buchstabe nicht in dem Wort vorkommt, dann wir der Benutzer darüber informiert
   * Jede Eingabe des Benutzers wird auf Richtigkeit überprüft (ist es genau ein Buchstabe)
-  * Groß- und Kleinschreibung wird nicht beachtet (alle Eingaben werden in Kleinbuchstabeln konvertiert)
+  * Groß- und Kleinschreibung wird nicht beachtet (z.B. alle Eingaben werden in Kleinbuchstaben konvertiert)
   * Wenn das Wort vollständig erraten ist, wird eine Erfolgsmeldung angezeigt
+  * alle Funktionen die nicht nur etwas ausgeben müssen getestet werden
 
 ZUSÄTZLICH
   * Alle bereits verwendeten falschen Buchstaben werden angezeigt
