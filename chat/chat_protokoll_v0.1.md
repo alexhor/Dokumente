@@ -47,6 +47,8 @@ Gibt an, welche Version des Protokolls verwendet wird.
       "protokoll_verion": "0.1"
     } 
 
+----
+
 ### Nachrichtentyp 1 - Textnachricht
 
 Jede Nachricht mit der nachrichten_id == 1 muss unter allen Umständen folgende Daten enthalten: 
@@ -76,3 +78,23 @@ Gibt an, mit welchem Parameter die Verschlüsselung eingesetzt wird. Ist ein Arr
       "protokoll_verion": "0.1"
     }
    
+
+----
+
+### Nachrichtentyp 2 - Benutzeraktion
+
+Jede Nachricht mit der nachrichten_id == 2 muss unter allen Umständen folgende Daten enthalten: 
+
+
+####aktion: string
+Welche Aktion führt der Benutzer aus.
+Folgende Aktionen sind zulässig: login, logout
+
+###Beispiel:
+    {
+      "nachrichten_id": 2,
+      "aktion": "login",
+      "sender_name": "ArthurDent42",
+      "zeit_stempel": 314159265,
+      "protokoll_verion": "0.1"
+    }
