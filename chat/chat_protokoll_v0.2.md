@@ -2,9 +2,9 @@
 # KGN - Chat Protokoll
 
 
-Version: 0.1  
-Autor: David Lang  
-Letzte Änderung: David Lang (2017-03-12_21:00)  
+Version: 0.2 
+Autor: David Lang
+Letzte Änderung: Alexander Hornig (2017-03-16_10:58)  
 
 ## Begriffe
 
@@ -61,7 +61,9 @@ Gibt an, wie Lang der gesendete Test ist.
 #####algorithmus: string
 Gibt an, welcher Verschlüsselungsalgorithmus verwendet wird.
 #####parameter: array
-Gibt an, mit welchem Parameter die Verschlüsselung eingesetzt wird. Ist ein Array. (z.B. bei Caesar wird nur ein Wert benötigt.
+Gibt an, mit welchem Parameter die Verschlüsselung eingesetzt wird. Ist ein Array. (z.B. bei Caesar wird nur ein Wert benötigt.)
+#####verschlüsselte_parameter: array
+Gibt an welche der Parameter mit diesem Algorithmus verschlüsselt wurden (z.B. ["text", "sender_name"]).
 
 ###Beispiel:
     {
