@@ -4,7 +4,7 @@
 
 Version: 0.2 
 Autor: David Lang  
-Letzte Änderung: Alexander Hornig (2017-03-16_11:05)  
+Letzte Änderung: Alexander Hornig (2017-03-20_15:21)  
 
 ## Begriffe
 
@@ -44,7 +44,7 @@ Gibt an, welche Version des Protokolls verwendet wird.
       "nachrichten_id": 0,
       "sender_name": "ArthurDent42",
       "zeitstempel": 314159265,
-      "protokoll_verion": "0.1"
+      "protokoll_version": "0.2"
     } 
 
 ----
@@ -78,7 +78,7 @@ Gibt an welche der Parameter mit diesem Algorithmus verschlüsselt wurden (z.B. 
       },
       "sender_name": "ArthurDent42",
       "zeitstempel": 314159265,
-      "protokoll_verion": "0.1"
+      "protokoll_version": "0.2"
     }
    
 
@@ -99,5 +99,5 @@ Folgende Aktionen sind zulässig: login, logout
       "aktion": "login",
       "sender_name": "ArthurDent42",
       "zeitstempel": 314159265,
-      "protokoll_verion": "0.1"
+      "protokoll_version": "0.2"
     }
