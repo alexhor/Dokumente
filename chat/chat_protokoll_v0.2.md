@@ -32,7 +32,7 @@ Jede Nachricht muss unter allen Umständen folgende Daten enthalten:
  
 #### nachrichten_id: number 
 Gibt an, welcher Typ von Nachricht zu erwarten ist. Definiert auch, welche Keys die Nachricht besitzen muss.  
-#### sender_id: string
+#### sender_name: string
 Gibt an, von wem die Nachricht kommt. Dieser Wert muss einmalig sein. Kann z.B. der Klarname ("Arthur Dent") oder Benutzername ("adent42") sein.
 #### zeitstempel: number
 Gibt an, zu welcher Zeit die Nachricht abgesendet wurde. Wird in Unixzeit angegeben.
@@ -77,7 +77,7 @@ Gibt an welche der Parameter mit diesem Algorithmus verschlüsselt wurden (z.B. 
         "verschlüsselte_parameter": []
       },
       "sender_name": "ArthurDent42",
-      "zeit_stempel": 314159265,
+      "zeitstempel": 314159265,
       "protokoll_verion": "0.1"
     }
    
@@ -98,6 +98,6 @@ Folgende Aktionen sind zulässig: login, logout
       "nachrichten_id": 2,
       "aktion": "login",
       "sender_name": "ArthurDent42",
-      "zeit_stempel": 314159265,
+      "zeitstempel": 314159265,
       "protokoll_verion": "0.1"
     }
