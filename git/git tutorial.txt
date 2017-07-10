@@ -1,0 +1,11 @@
+cd Desktop
+mkdir Github
+git clone ssh://git@github.com/USERNAME/Dokumente.git [NEW_DIRNAME]
+cd Dokumente		ODER		cd NEW_DIRNAME
+
+git status
+git add FILENAME
+git commit -m "SOME MEANINGFUL MESSAGE"
+git push
+
+git pull
