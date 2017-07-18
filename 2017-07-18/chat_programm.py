@@ -1,4 +1,5 @@
 import json, rotation_encryption, simple_socket, sys, threading, time
+from PyQt5 import QtWidgets
 
 class Packet:
 
@@ -65,9 +66,10 @@ class Packet:
 
 
 
-class ChatProgram:
+class ChatProgram(QtWidgets.QWidget):
 
     def __init__(self):
+        #super().__init__()
         self.__running = False
         self.__nickname = None
         self.__my_socket = None
@@ -102,17 +104,43 @@ class ChatProgram:
         
         self.__my_socket.send(self.create_packet_2(self.__nickname, "login"))
         
-        self.__user_input_thread = threading.Thread(target=self.user_input_runnable, args=())
         self.__socket_input_thread = threading.Thread(target=self.socket_input_runnable, args=())
 
         print("\nEingeloggt!\n")
 
+        self.init_ui()
+
         self.__running = True
-        
-        self.__user_input_thread.start()
+
         self.__socket_input_thread.start()
 
 
+    def init_ui(self):
+        super().__init__()
+        self.setWindowTitle("Chat")
+
+        self.lbl = QtWidgets.QLabel("")
+
+        self.txt = QtWidgets.QTextEdit()
+
+        self.btn = QtWidgets.QPushButton("Senden")
+        self.btn.clicked.connect(self.btn_click)
+
+        v_box = QtWidgets.QVBoxLayout()
+        v_box.addWidget(self.lbl)
+        v_box.addWidget(self.txt)
+        v_box.addWidget(self.btn)
+
+        h_box = QtWidgets.QHBoxLayout()
+        h_box.addStretch()
+        h_box.addLayout(v_box)
+        h_box.addStretch()
+
+        self.setLayout(h_box)
+
+        print("...")
+
+    
     def create_packet_1(self, sender, message):
         packet = Packet()
         packet.nachrichten_id = 1
@@ -130,20 +158,19 @@ class ChatProgram:
         return packet.to_json_string()
 
 
-    def user_input_runnable(self):
-        while self.__running:
-            for line in sys.stdin:
-                line = line[:len(line) - 1]
-                if line == "\\end":
-                    json_string = self.create_packet_2(self.__nickname, "logout")
-                    self.__my_socket.send(json_string)
-                    self.__my_socket.close()
-                    print("\nAusgeloggt!\n")
-                    self.__running = False
-                else:
-                    json_string = self.create_packet_1(self.__nickname, line)
-                    if not self.__my_socket.send(json_string):
-                        self.__running = False
+    def btn_click(self):
+        line = self.txt.toPlainText()
+        if line == "\\end":
+            json_string = self.create_packet_2(self.__nickname, "logout")
+            self.__my_socket.send(json_string)
+            self.__my_socket.close()
+            self.lbl.setText("\nAusgeloggt!\n")
+            self.__running = False
+        else:
+            json_string = self.create_packet_1(self.__nickname, line)
+            if not self.__my_socket.send(json_string):
+                self.__running = False
+        self.txt.setText("")
             
 
     def socket_input_runnable(self):
@@ -152,16 +179,19 @@ class ChatProgram:
             if json_string:
                 packet = Packet(json_string)
                 if packet.nachrichten_id == 1:
-                    print(packet.sender_name + ": " + packet.text)
+                    self.lbl.setText(packet.sender_name + ": " + packet.text)
                 elif packet.nachrichten_id == 2:
                     if packet.aktion == "login":
-                        print(packet.sender_name + " hat den Chatraum betreten!")
+                        self.lbl.setText(packet.sender_name + " hat den Chatraum betreten!")
                     elif packet.aktion == "logout":
-                        print(packet.sender_name + " hat den Chatraum verlassen!")
+                        self.lbl.setText(packet.sender_name + " hat den Chatraum verlassen!")
             else:
                 self.__running = False
                 
 
 
+app = QtWidgets.QApplication(sys.argv)
 chat_program = ChatProgram()
 chat_program.launch()
+chat_program.show()
+sys.exit(app.exec_())
