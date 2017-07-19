@@ -72,65 +72,69 @@ class ChatProgram(QWidget):
         self.__running = False
         self.__nickname = None
         self.__my_socket = None
-        self.__user_input_thread = None
         self.__socket_input_thread = None
 
 
+    # Initialisiert das Launch-Fenster
     def init_launch_ui(self):
-        self.setWindowTitle("Launch Chat")
+        self.setWindowTitle("Launch Chat")              # setze den Fenster-Titel
 
-        v_box = QVBoxLayout()
+        v_box = QVBoxLayout()                           # erzeuge und setze vertikales Haupt-Layout
         self.setLayout(v_box)
 
-        self.label1 = QLabel("Server-Adresse: ")
+        self.label1 = QLabel("Server-Adresse: ")        # erzeuge Label und Eingabe-Feld für IP-Adresse
         self.line1 = QLineEdit()
         h_box = QHBoxLayout()
         h_box.addWidget(self.label1)
         h_box.addWidget(self.line1)
         v_box.addLayout(h_box)
 
-        self.label2 = QLabel("Server-Port: ")
+        self.label2 = QLabel("Server-Port: ")           # erzeuge Label und Eingabe-Feld für Port
         self.line2 = QLineEdit()
         h_box = QHBoxLayout()
         h_box.addWidget(self.label2)
         h_box.addWidget(self.line2)
         v_box.addLayout(h_box)
         
-        self.label3 = QLabel("Username: ")
+        self.label3 = QLabel("Username: ")              # erzeuge Label und Eingabe-Feld für Username
         self.line3 = QLineEdit()
         h_box = QHBoxLayout()
         h_box.addWidget(self.label3)
         h_box.addWidget(self.line3)
         v_box.addLayout(h_box)
 
-        self.button_login = QPushButton("Verbinden")
+        self.button_login = QPushButton("Verbinden")    # erzeuge Button zum Verbinden
         self.button_login.clicked.connect(self.connect)
         v_box.addWidget(self.button_login)
 
-        self.show()
+        self.line1.returnPressed.connect(self.connect)  # Enter drücken zum Verbinden
+        self.line2.returnPressed.connect(self.connect)
+        self.line3.returnPressed.connect(self.connect)
+
+        self.show()                                     # mache Fenster sichtbar
         
 
     def connect(self):
-        server_address = self.line1.text()
+        server_address = self.line1.text()              # lese IP-Adresse und Port aus
         server_port = self.line2.text()
 
         try:
-            server_port = int(str(server_port))
+            server_port = int(str(server_port))         # konvertiere Port zu Ganzzahl
         except:
             return
 
         self.__my_socket = simple_socket.connect_as_client(server_address, server_port)
 
-        if not self.__my_socket:
+        if not self.__my_socket:                        # prüfe ob Verbindung erfolgreich war
             return
 
-        self.__nickname = self.line3.text()
+        self.__nickname = self.line3.text()             # lese Username aus
 
-        self.__my_socket.send(self.create_packet_2(self.__nickname, "login"))
+        self.__my_socket.send(self.create_packet_2(self.__nickname, "login"))       # sende Login-Paket
         
         self.__socket_input_thread = threading.Thread(target=self.socket_input_runnable, args=())
 
-        self.init_chat_ui()
+        self.init_chat_ui()                             # starte Thread und neue Darstellung
 
         self.__running = True
 
@@ -139,31 +143,29 @@ class ChatProgram(QWidget):
 
     def init_chat_ui(self):
 
-        while self.layout().count():
+        while self.layout().count():                    # lösche Objekte des Launch-Fensters
             child = self.layout().takeAt(0)
             if child.widget():
                 child.widget().deleteLater()
         
-        self.setWindowTitle("Chat")
+        self.setWindowTitle("Chat")                     # setze Fenster-Titel
 
-        self.chat = QTextEdit()
+        self.chat = QTextEdit()                         # erzeuge Nur-Lese-Textfeld für den Chat-Verlauf
         self.chat.setReadOnly(True)
 
-        self.line = QLineEdit()
-        self.line.returnPressed.connect(self.button_clicked)
+        self.line = QLineEdit()                         # erzeuge Ein-Zeilen-Textfeld zum Schreiben
+        self.line.returnPressed.connect(self.send_message)    # Enter drücken sendet Nachricht
 
-        self.button = QPushButton("Senden")
-        self.button.clicked.connect(self.button_clicked)
+        self.button = QPushButton("Senden")             # erzeuge "Senden"-Button
+        self.button.clicked.connect(self.send_message)
 
-        h_box = QHBoxLayout()
+        h_box = QHBoxLayout()                           # erzeuge horizontales Layout für Textfeld und Button
         h_box.addWidget(self.line)
         h_box.addWidget(self.button)
 
-        v_box = self.layout()
+        v_box = self.layout()                           # füge alle Objekte zum vertikalen Haupt-Layout hinzu
         v_box.addWidget(self.chat)
         v_box.addLayout(h_box)
-
-        self.setLayout(v_box)
 
     
     def create_packet_1(self, sender, message):
@@ -183,7 +185,7 @@ class ChatProgram(QWidget):
         return packet.to_json_string()
 
 
-    def button_clicked(self):
+    def send_message(self):
         line = self.line.text()
         if line == "\\end":
             json_string = self.create_packet_2(self.__nickname, "logout")
