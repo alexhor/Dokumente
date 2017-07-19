@@ -65,11 +65,9 @@ class Packet:
 #    print(packet2.sender_name + (" hat sich ausgeloggt" if packet2.aktion == "logout" else " hat sich eingeloggt"))
 
 
-
 class ChatProgram(QtWidgets.QWidget):
 
     def __init__(self):
-        #super().__init__()
         self.__running = False
         self.__nickname = None
         self.__my_socket = None
@@ -123,6 +121,7 @@ class ChatProgram(QtWidgets.QWidget):
         self.chat.setReadOnly(True)
 
         self.line = QtWidgets.QLineEdit()
+        self.line.returnPressed.connect(self.button_clicked)
 
         self.button = QtWidgets.QPushButton("Senden")
         self.button.clicked.connect(self.button_clicked)
