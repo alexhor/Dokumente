@@ -119,26 +119,23 @@ class ChatProgram(QtWidgets.QWidget):
         super().__init__()
         self.setWindowTitle("Chat")
 
-        self.lbl = QtWidgets.QLabel("")
+        self.chat = QtWidgets.QTextEdit()
+        self.chat.setReadOnly(True)
 
-        self.txt = QtWidgets.QTextEdit()
+        self.line = QtWidgets.QLineEdit()
 
-        self.btn = QtWidgets.QPushButton("Senden")
-        self.btn.clicked.connect(self.btn_click)
-
-        v_box = QtWidgets.QVBoxLayout()
-        v_box.addWidget(self.lbl)
-        v_box.addWidget(self.txt)
-        v_box.addWidget(self.btn)
+        self.button = QtWidgets.QPushButton("Senden")
+        self.button.clicked.connect(self.button_clicked)
 
         h_box = QtWidgets.QHBoxLayout()
-        h_box.addStretch()
-        h_box.addLayout(v_box)
-        h_box.addStretch()
+        h_box.addWidget(self.line)
+        h_box.addWidget(self.button)
 
-        self.setLayout(h_box)
+        v_box = QtWidgets.QVBoxLayout()
+        v_box.addWidget(self.chat)
+        v_box.addLayout(h_box)
 
-        print("...")
+        self.setLayout(v_box)
 
     
     def create_packet_1(self, sender, message):
@@ -158,19 +155,20 @@ class ChatProgram(QtWidgets.QWidget):
         return packet.to_json_string()
 
 
-    def btn_click(self):
-        line = self.txt.toPlainText()
+    def button_clicked(self):
+        line = self.line.text()
         if line == "\\end":
             json_string = self.create_packet_2(self.__nickname, "logout")
             self.__my_socket.send(json_string)
             self.__my_socket.close()
-            self.lbl.setText("\nAusgeloggt!\n")
+            self.chat.append("\nAusgeloggt!\n")
             self.__running = False
         else:
+            self.chat.append(self.__nickname + ": " + line)
             json_string = self.create_packet_1(self.__nickname, line)
             if not self.__my_socket.send(json_string):
                 self.__running = False
-        self.txt.setText("")
+        self.line.setText("")
             
 
     def socket_input_runnable(self):
@@ -179,12 +177,12 @@ class ChatProgram(QtWidgets.QWidget):
             if json_string:
                 packet = Packet(json_string)
                 if packet.nachrichten_id == 1:
-                    self.lbl.setText(packet.sender_name + ": " + packet.text)
+                    self.chat.append(packet.sender_name + ": " + packet.text)
                 elif packet.nachrichten_id == 2:
                     if packet.aktion == "login":
-                        self.lbl.setText(packet.sender_name + " hat den Chatraum betreten!")
+                        self.chat.append(packet.sender_name + " hat den Chatraum betreten!")
                     elif packet.aktion == "logout":
-                        self.lbl.setText(packet.sender_name + " hat den Chatraum verlassen!")
+                        self.chat.append(packet.sender_name + " hat den Chatraum verlassen!")
             else:
                 self.__running = False
                 
