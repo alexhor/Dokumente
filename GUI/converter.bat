@@ -1,0 +1,1 @@
+"C:\Program Files\Python35\Lib\site-packages\PyQt5\pyuic5.bat" %1.ui > %1.py
